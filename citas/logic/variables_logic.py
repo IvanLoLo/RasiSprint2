@@ -66,8 +66,29 @@ def create_cita(cita):
     :param cita: cita data
     :return: cita object
     """
+    cita['paciente'] = Paciente.objects.get(pk=cita['paciente'])
+    cita['doctor'] = Doctor.objects.get(pk=cita['doctor'])
     cita = Cita.objects.create(**cita)
     return cita
+
+def create_paciente(paciente):
+    """
+    Create a new paciente
+    :param paciente: paciente data
+    :return: paciente object
+    """
+    print(paciente)
+    paciente = Paciente.objects.create(**paciente)
+    return paciente
+
+def create_doctor(doctor):
+    """
+    Create a new doctor
+    :param doctor: doctor data
+    :return: doctor object
+    """
+    doctor = Doctor.objects.create(**doctor)
+    return doctor
 
 
 def update_cita(var_pk, new_var):

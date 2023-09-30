@@ -3,3 +3,4 @@ django-redis
 psycopg2-binary
 pytz
 sqlparse
+django-cors-headers

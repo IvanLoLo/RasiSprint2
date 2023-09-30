@@ -24,6 +24,22 @@ def citas_view(request):
         cita_dto = vl.create_cita(json.loads(request.body))
         cita = serializers.serialize('json', [cita_dto,])
         return HttpResponse(cita, 'application/json')
+        
+@csrf_exempt
+def paciente_view(request):
+    if request.method == 'POST':
+        paciente_dto = vl.create_paciente(json.loads(request.body))
+        paciente = serializers.serialize('json', [paciente_dto,])
+        return HttpResponse(paciente, 'application/json')
+        
+@csrf_exempt
+def medico_view(request):
+    if request.method == 'POST':
+        print("Entra", request.body)
+        medico_dto = vl.create_doctor(json.loads(request.body))
+        medico = serializers.serialize('json', [medico_dto,])
+        print(medico_dto, medico)
+        return HttpResponse(medico, 'application/json')
     
 @csrf_exempt
 def cita_view(request, pk):
