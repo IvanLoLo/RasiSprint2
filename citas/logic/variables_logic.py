@@ -40,7 +40,7 @@ def get_citas_by_fecha(fecha):
         print("DB")
         fecha_final = fecha_inicial + timedelta(days=7)
         citas = Cita.objects.filter(fecha__gte=fecha, fecha__lt=fecha_final).count()
-        if is_redis_available: cache.set(fecha_inicial, citas)
+        if is_redis_available: cache.set(fecha_inicial, citas, 60*60*24)
     return citas
 
 def get_citas_by_especialidad(especialidad):
