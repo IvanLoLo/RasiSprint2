@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from google.oauth2 import service_account
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +30,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# storage
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    os.path.join(BASE_DIR, 'unaldinos-bucket.json')
+)
+
+GS_BUCKET_NAME = 'rasi-bucket'
+
+
+
 
 # Application definition
 
@@ -38,7 +50,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'citas'
+    'citas',
+    'basics'
 ]
 
 MIDDLEWARE = [
@@ -96,6 +109,12 @@ DATABASES = {
     }
 }
 
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.gcloud.GoogleCloudStorage",
+    },
+}
+
 """
 DATABASES = {
     'default': {
@@ -151,3 +170,4 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
