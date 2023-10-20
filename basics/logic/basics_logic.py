@@ -6,6 +6,7 @@ from django.core.files.base import ContentFile
 import io
 import os
 import uuid
+import shortuuid
 
 
 storage = GoogleCloudStorage()
@@ -23,7 +24,7 @@ def create_contract(file):
      try:
         file_data = io.BytesIO(file.read())
         file_data.seek(0)
-        target_path = sanitize_filename(f'/images/{str(uuid.uuid4())}-{file.name}')
+        target_path = sanitize_filename(shortuuid.uuid())
         path = storage.save(target_path, ContentFile(file_data.read()))
         # storage.url(path)
         contractFile = ContractFile.objects.create(fileName='Some Value', publicURI='Some URI')
