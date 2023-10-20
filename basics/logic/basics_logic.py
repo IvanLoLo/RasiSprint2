@@ -24,7 +24,7 @@ def create_contract(file):
      try:
         file_data = io.BytesIO(file.read())
         file_data.seek(0)
-        target_path = sanitize_filename(shortuuid.uuid())
+        target_path = sanitize_filename(shortuuid.uuid() + file.name)
         path = storage.save(target_path, ContentFile(file_data.read()))
         # storage.url(path)
         contractFile = ContractFile.objects.create(fileName='Some Value', publicURI='Some URI')
