@@ -7,8 +7,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def citas_view(request):
-    print("Primera funcion")
+
     if request.method == 'GET':
+        print("Get citas")
         id = request.GET.get('id', None)
         if id:
             cita = vl.get_cita(id)
@@ -16,7 +17,7 @@ def citas_view(request):
             return HttpResponse(cita_dto, 'application/json')
         else:
             citas = vl.get_citas()
-            print("Here", citas)
+            #print("Here", citas)
             citas_dto = serializers.serialize('json', citas)
             return HttpResponse(citas_dto, 'application/json')
         
@@ -35,10 +36,10 @@ def paciente_view(request):
 @csrf_exempt
 def medico_view(request):
     if request.method == 'POST':
-        print("Entra", request.body)
+        #print("Entra", request.body)
         medico_dto = vl.create_doctor(json.loads(request.body))
         medico = serializers.serialize('json', [medico_dto,])
-        print(medico_dto, medico)
+        #print(medico_dto, medico)
         return HttpResponse(medico, 'application/json')
     
 @csrf_exempt

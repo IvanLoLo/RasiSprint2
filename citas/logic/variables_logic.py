@@ -77,7 +77,7 @@ def create_paciente(paciente):
     :param paciente: paciente data
     :return: paciente object
     """
-    print(paciente)
+    #print(paciente)
     paciente = Paciente.objects.create(**paciente)
     return paciente
 
