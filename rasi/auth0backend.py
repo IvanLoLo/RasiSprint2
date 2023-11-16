@@ -1,5 +1,4 @@
 import requests
-import os
 from social_core.backends.oauth import BaseOAuth2
 
 class Auth0(BaseOAuth2):
@@ -37,9 +36,9 @@ def getRole(request):
     user = request.user
     auth0user = user.social_auth.get(provider="auth0")
     accessToken = auth0user.extra_data['access_token']
-    url = "https://"+str(os.getenv('AUTH0_DOMAIN'))+"/userinfo"
+    url = "https://rasi.us.auth0.com/userinfo"
     headers = {'authorization': 'Bearer ' + accessToken}
     resp = requests.get(url, headers=headers)
     userinfo = resp.json()
-    role = userinfo[str(os.getenv('AUTH0_DOMAIN'))+'/role']
+    role = userinfo['rasi.us.auth0.com/role']
     return (role)

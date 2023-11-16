@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -154,13 +153,13 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login/auth0'
+LOGIN_URL = '/login/auth0'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = 'https://'+str(os.getenv('AUTH0_DOMAIN'))+'/v2/logout?returnTo=http%3A%2F%2F'+str(os.getenv('IP'))+':8000'
+LOGOUT_REDIRECT_URL = 'https://rasi.us.auth0.com/v2/logout?returnTo=http%3A%2F%2F{{ip_publica_instancia}}:8080'
 SOCIAL_AUTH_TRAILING_SLASH = False
-SOCIAL_AUTH_AUTH0_DOMAIN = str(os.getenv('AUTH0_DOMAIN'))
-SOCIAL_AUTH_AUTH0_KEY = str(os.getenv('AUTH0_KEY'))
-SOCIAL_AUTH_AUTH0_SECRET = str(os.getenv('AUTH0_SECRET'))
+SOCIAL_AUTH_AUTH0_DOMAIN = 'rasi.us.auth0.com'
+SOCIAL_AUTH_AUTH0_KEY = 'hfP90WL51axfipuf8n1FmlypHLt6Or15'
+SOCIAL_AUTH_AUTH0_SECRET = '7xRWgxvaMMf63gTQhFJ0cf2lP23e0uTo29YGC4A7vHrjp7HeipZO6FhlZzq8S4rp'
 
 SOCIAL_AUTH_AUTH0_SCOPE = [
  'openid',
