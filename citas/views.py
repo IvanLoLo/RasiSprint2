@@ -7,7 +7,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def citas_view(request):
-    print("Primera funcion")
     if request.method == 'GET':
         id = request.GET.get('id', None)
         if id:
@@ -16,7 +15,6 @@ def citas_view(request):
             return HttpResponse(cita_dto, 'application/json')
         else:
             citas = vl.get_citas()
-            print("Here", citas)
             citas_dto = serializers.serialize('json', citas)
             return HttpResponse(citas_dto, 'application/json')
         
@@ -24,26 +22,9 @@ def citas_view(request):
         cita_dto = vl.create_cita(json.loads(request.body))
         cita = serializers.serialize('json', [cita_dto,])
         return HttpResponse(cita, 'application/json')
-        
-@csrf_exempt
-def paciente_view(request):
-    if request.method == 'POST':
-        paciente_dto = vl.create_paciente(json.loads(request.body))
-        paciente = serializers.serialize('json', [paciente_dto,])
-        return HttpResponse(paciente, 'application/json')
-        
-@csrf_exempt
-def medico_view(request):
-    if request.method == 'POST':
-        print("Entra", request.body)
-        medico_dto = vl.create_doctor(json.loads(request.body))
-        medico = serializers.serialize('json', [medico_dto,])
-        print(medico_dto, medico)
-        return HttpResponse(medico, 'application/json')
     
 @csrf_exempt
 def cita_view(request, pk):
-    print("Segunda funcion")
     if request.method == 'GET':
         citas = vl.get_cita(pk)
         citas_dto = serializers.serialize('json', [citas,])
@@ -53,6 +34,40 @@ def cita_view(request, pk):
         cita_dto = vl.update_cita(pk, json.loads(request.body))
         cita = serializers.serialize('json', [cita_dto,])
         return HttpResponse(cita, 'application/json')
+        
+@csrf_exempt
+def paciente_view(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            paciente = vl.get_paciente(pk)
+            paciente_dto = serializers.serialize('json', [paciente,])
+            return HttpResponse(paciente_dto, 'application/json')
+        else:
+            pacientes = vl.get_pacientes()
+            pacientes_dto = serializers.serialize('json', pacientes)
+            return HttpResponse(pacientes_dto, 'application/json')
+
+    if request.method == 'POST':
+        paciente_dto = vl.create_paciente(json.loads(request.body))
+        paciente = serializers.serialize('json', [paciente_dto,])
+        return HttpResponse(paciente, 'application/json')
+        
+@csrf_exempt
+def medico_view(request, pk=None):
+    if request.method == 'GET':
+        if pk:
+            medico = vl.get_doctor(pk)
+            medico_dto = serializers.serialize('json', [medico,])
+            return HttpResponse(medico_dto, 'application/json')
+        else:
+            medicos = vl.get_doctors()
+            medicos_dto = serializers.serialize('json', medicos)
+            return HttpResponse(medicos_dto, 'application/json')
+        
+    if request.method == 'POST':
+        medico_dto = vl.create_doctor(json.loads(request.body))
+        medico = serializers.serialize('json', [medico_dto,])
+        return HttpResponse(medico, 'application/json')
     
 def cita_by_fecha_view(request, fecha):
     if request.method == 'GET':
