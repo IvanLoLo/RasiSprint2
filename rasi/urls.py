@@ -22,4 +22,6 @@ urlpatterns = [
     path('home/', views.home),
     path('citas/', include('citas.urlsCita')),
     path('', include('citas.urlsUsers')),
+    path(r'', include('django.contrib.auth.urls')),
+    path(r'', include('social_django.urls')),
 ]
