@@ -8,6 +8,7 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def citas_view(request):
     if request.method == 'GET':
+        print("Get citas")
         id = request.GET.get('id', None)
         if id:
             cita = vl.get_cita(id)
