@@ -4,8 +4,10 @@ from django.http import HttpResponse
 from .logic import variables_logic as vl
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 @csrf_exempt
+@login_required
 def citas_view(request):
     if request.method == 'GET':
         id = request.GET.get('id', None)
@@ -24,6 +26,7 @@ def citas_view(request):
         return HttpResponse(cita, 'application/json')
     
 @csrf_exempt
+@login_required
 def cita_view(request, pk):
     if request.method == 'GET':
         citas = vl.get_cita(pk)
@@ -36,6 +39,7 @@ def cita_view(request, pk):
         return HttpResponse(cita, 'application/json')
         
 @csrf_exempt
+@login_required
 def paciente_view(request, pk=None):
     if request.method == 'GET':
         if pk:
@@ -53,6 +57,7 @@ def paciente_view(request, pk=None):
         return HttpResponse(paciente, 'application/json')
         
 @csrf_exempt
+@login_required
 def medico_view(request, pk=None):
     if request.method == 'GET':
         if pk:
@@ -68,19 +73,22 @@ def medico_view(request, pk=None):
         medico_dto = vl.create_doctor(json.loads(request.body))
         medico = serializers.serialize('json', [medico_dto,])
         return HttpResponse(medico, 'application/json')
-    
+
+@login_required    
 def cita_by_fecha_view(request, fecha):
     if request.method == 'GET':
         citas = vl.get_citas_by_fecha(fecha)
         citas_dto = json.dumps({"total_citas": citas})
         return HttpResponse(citas_dto, 'application/json')
     
+@login_required
 def cita_by_mes_view(request, mes):
     if request.method == 'GET':
         citas = vl.get_citas_by_mes(mes)
         citas_dto = json.dumps({"total_citas": citas})
         return HttpResponse(citas_dto, 'application/json')
-    
+
+@login_required    
 def cita_by_especialidad_view(request, especialidad):
     if request.method == 'GET':
         citas = vl.get_citas_by_especialidad(especialidad)

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'citas'
+    'citas',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -151,3 +153,23 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_URL = 'login/auth0'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = 'https://'+str(os.getenv('AUTH0_DOMAIN'))+'/v2/logout?returnTo=http%3A%2F%2F'+str(os.getenv('IP'))+':8000'
+SOCIAL_AUTH_TRAILING_SLASH = False
+SOCIAL_AUTH_AUTH0_DOMAIN = str(os.getenv('AUTH0_DOMAIN'))
+SOCIAL_AUTH_AUTH0_KEY = str(os.getenv('AUTH0_KEY'))
+SOCIAL_AUTH_AUTH0_SECRET = str(os.getenv('AUTH0_SECRET'))
+
+SOCIAL_AUTH_AUTH0_SCOPE = [
+ 'openid',
+ 'profile',
+ 'email',
+ 'role',
+]
+
+AUTHENTICATION_BACKENDS = {
+ 'rasi.auth0backend.Auth0',
+ 'django.contrib.auth.backends.ModelBackend',
+}
