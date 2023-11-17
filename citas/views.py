@@ -45,7 +45,7 @@ def cita_view(request, pk):
         
 @csrf_exempt
 def paciente_view(request, pk=None):
-    if request.method == 'GET': paciente_get_view(request, pk)
+    if request.method == 'GET': return paciente_get_view(request, pk)
     if request.method == 'POST':
         paciente_dto = vl.create_paciente(json.loads(request.body))
         paciente = serializers.serialize('json', [paciente_dto,])
